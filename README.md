@@ -70,7 +70,7 @@ Output Options:
 Additional General Alignment Options:
 -BW   INT  BandWidth: band size on each side of the diagonal of banded Smith Waterman [5]
 -G    INT  maxGap: maximum indel size allowed with a single alignment [50]
--H    INT  maxHits: maximum occurances for a seed in the reference before it is ignored as too repetitive [650]
+-H    INT  maxHits: maximum times a seed is in the reference before it is ignored as too repetitive [650]
 -M    INT  minMatch: minimum number of bases in seeds to start an alignment [25]
 -MD   INT  MaxDesert: maximum number of contiguous bases without a seed before alignmment is split [50] 
 -P    REAL minPercent-identity: minimum matching/alignment-length for a query to be included in output [0.9]
@@ -88,14 +88,15 @@ If on, the following are used:
 
 -OQC  BOOL (Y|N) controls use of the Optimal Query Coverage Algorithm.
 If -OQC if off, all alignments meeting above criteria are output.
-If on, a set of alignments are found that optimally cover the length of the query, using the following options:
+If on, a set of alignments are found that optimally cover the query, using the following options:
 -BP   INT BreakpointPenalty: penalty for inserting a breakpoint in split-read alignment [5]
 -MGDP INT MaxGenomicDistancePenalty (5)] 
--MNO  INT MinNonOverlap: minimum number of non-overlapping bases required on each side of split alignment [minMatch]
-NOTE: The total cost of inserting a breakpoint in a split-read is BP*MIN(MGDP, Log10(genomic distance between reference loci))
+-MNO  INT MinNonOverlap: minimum number of unshared bases required in each split alignment [minMatch]
+NOTE: The total cost of inserting a breakpoint in a split-read is:
+  BP*MIN(MGDP, Log10(genomic distance between reference loci))
 
 -FBS  BOOL (Y|N) controls inclusion of alignments similar to best alignment found using OQC.
-If -FBS is on, the following are used.  A "secondary" alignemnt must satisfy BOTH criteria.
+If -FBS is on, the following are used.  A alignemnt must satisfy BOTH criteria to be "similar".
 -PRL  REAL PercentReciprocalLength: minimum ratio of overlapping length between similar alignemnt [0.9] 
 -PSS  REAL PercentSimilarScore: minimum ratio of scores between similar alignments [0.9]
 ```
