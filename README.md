@@ -7,7 +7,7 @@
 [Faust G.G. and Hall I.M., "*YAHA*: fast and flexible long-read alignment with optimal breakpoint detection,"
 *Bioinformatics* Oct. 2012; **28**(19): 2417-2424.](http://bioinformatics.oxfordjournals.org/content/28/19/2417)
 
-There is an extensive [User Guide](https://github.com/GregoryFaust/yaha/YAHA_User_Guide.0.1.82.pdf) 
+There is an extensive [User Guide](https://www.dropbox.com/s/bmyny13fcsnjuee/YAHA_User_Guide.0.1.82.pdf?dl=0) 
 that supplements the command information below.  
 Click the preceeding link or download the file from this repository.
 
@@ -45,7 +45,7 @@ cp yaha /usr/local/bin/.
 
 **COMMON USAGE SCENARIOS:** 
 
-To create an index. NOTE: The genome file can be a FASTA file, or a nib2 file (created by a previous yaha index operation):
+To create an index. NOTE: The genome file can be a FASTA file, or a nib2 file (created by a previous *yaha* index operation):
 ```
 yaha -g genomeFilename [-H maxHits (65525)] [-L wordLen (15)] [-S Skip-distance (1)]
 ```
