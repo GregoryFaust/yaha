@@ -45,29 +45,34 @@ cp yaha /usr/local/bin/.
 
 **COMMON USAGE SCENARIOS:** 
 
-To create an index. NOTE: The genome file can be a FASTA file, or a nib2 file (created by a previous *yaha* index operation):
+To create an index for a reference genome:
 ```
-yaha -g genomeFilename [-H maxHits (65525)] [-L wordLen (15)] [-S Skip-distance (1)]
+yaha -g <genomeFilename> -H <maxHits> -L <seedLength> -S <Skipdistance>
 ```
 
-To align queries.  NOTE: The query file can be either a FASTA file or a FASTQ file.
+To align sequencing data:
 ```
-yaha -x yahaIndexFile [-q queryFile|(stdin)] [(-osh)|-oss outputFile|(stdout)][AdditionalOptions]
+yaha -x <yahaIndexFile> -q <queryFile> -osh <outputFile> [Additional Options...]
 ```
 
 ---
 **OPTIONS:**
 Default values enclosed in square brackets []
 ```
-Output Options:
--g    FILE input genome file to use during index creation
--q    FILE input file of sequence reads to align [STDIN]
+Input/Output Options:
+-g    FILE input genome file to use during index creation (FASTA or nib2)
+-q    FILE input file of sequence reads to align (FASTA or FASTQ) [STDIN]
 -osh  FILE output file for alignment output in SAM format with hard clipping(default) [STDOUT]
 -oss  FILE output file for alignment output in SAM format with soft clipping [STDOUT]
 -x    FILE reference index file to use during alignment
+NOTE: At most one of -osh or -oss should be specified.
 
+Index Creation Options:
+-H    INT  maxHits: During index creation, seeds occuring more than maxHits times will be sampled [65565]
+-L    INT  seedLength: Length of seed to use.  During alignment, seed length is taken from index file [15]
+-S    INT  Skipdistance: Number of bases to skip ahead before forming next seed [1]
 
-Additional General Alignment Options:
+General Alignment Options:
 -BW   INT  BandWidth: band size on each side of the diagonal of banded Smith Waterman [5]
 -G    INT  maxGap: maximum indel size allowed with a single alignment [50]
 -H    INT  maxHits: maximum times a seed is in the reference before it is ignored as too repetitive [650]
@@ -77,26 +82,28 @@ Additional General Alignment Options:
 -X    INT  Xdropoff: maximum score dropoff before terminating alignment extensions [25]
 -t    INT  numThreads: number of threads used to parallel process reads [1]
 
-Affine Gap Scoring Parameters:
--AGS  BOOL (Y|N) controls use of Affine Gap Scoring [Y].  
+Affine Gap Scoring Options:
 If -AGS is off, a simple edit distance calculation is done.
-If on, the following are used:
+If on, the remaining options are used:
+-AGS  BOOL (Y|N) controls use of Affine Gap Scoring [Y].  
 -GEC  INT  GapExtensionCost: cost for extending a gap (indel) [2] 
 -GOC  INT  GapOpenCost: cost for starting a new gap (indel) [5]
 -MS   INT  MatchScore: score added for each matching base [1] 
 -RC   INT  ReplacementCost: score subtracted for each mismatched base [3]
 
--OQC  BOOL (Y|N) controls use of the Optimal Query Coverage Algorithm.
+Optimal Query Coverage Options:
 If -OQC if off, all alignments meeting above criteria are output.
-If on, a set of alignments are found that optimally cover the query, using the following options:
+If -OQC is on, a set of alignments are found that optimally cover the query, using the remaining options.
+-OQC  BOOL (Y|N) controls use of the Optimal Query Coverage Algorithm.
 -BP   INT BreakpointPenalty: penalty for inserting a breakpoint in split-read alignment [5]
 -MGDP INT MaxGenomicDistancePenalty (5)] 
 -MNO  INT MinNonOverlap: minimum number of unshared bases required in each split alignment [minMatch]
-NOTE: The total cost of inserting a breakpoint in a split-read is:
+NOTE: The total cost of adding a breakpoint in a split-read mapping is:
   BP*MIN(MGDP, Log10(genomic distance between reference loci))
 
--FBS  BOOL (Y|N) controls inclusion of alignments similar to best alignment found using OQC.
-If -FBS is on, the following are used.  A alignemnt must satisfy BOTH criteria to be "similar".
+Filter By Similarity Options:
+If -FBS is on, the remaining options are used.  An alignemnt must satisfy BOTH criteria to be "similar".
+-FBS  BOOL (Y|N) controls output of alignments similar to best alignment found using OQC.
 -PRL  REAL PercentReciprocalLength: minimum ratio of overlapping length between similar alignemnt [0.9] 
 -PSS  REAL PercentSimilarScore: minimum ratio of scores between similar alignments [0.9]
 ```
