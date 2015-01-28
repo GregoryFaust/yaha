@@ -7,18 +7,18 @@
 [Faust G.G. and Hall I.M., "*YAHA*: fast and flexible long-read alignment with optimal breakpoint detection,"
 *Bioinformatics* Oct. 2012; **28**(19): 2417-2424.](http://bioinformatics.oxfordjournals.org/content/28/19/2417)
 
-There is an extensive [User Guide](https://www.dropbox.com/s/bmyny13fcsnjuee/YAHA_User_Guide.0.1.82.pdf?dl=0) 
+There is an extensive [User Guide](https://www.dropbox.com/s/7j758vpbaskcq20/YAHA_User_Guide.0.1.83.pdf?dl=0)
 that supplements the command information below.  
 Click the preceeding link or download the file from this repository.
 
 ---
 
-**Current version:** 0.1.82
+**Current version:** 0.1.83
 
 Current support for Linux only.
 
 ##Summary
-*yaha* is a flexible, sensitive and accurate DNA aligner designed for single-end reads.
+*yaha* is an open source, flexible, sensitive and accurate DNA aligner designed for single-end reads.
 It supports three major modes of operation:
 
 1. The default “Optimal Query Coverage” (**-OQC**) mode reports the best set of alignments that cover the length of each 
@@ -32,13 +32,12 @@ identify structural variation events (deletions, duplications, insertions or inv
 between the subject query and the reference genome.
 
 ##Installation
-*yaha* is currently released as a executable binary only. 
-
 *yaha* can be downloaded from the **_releases_** tab or manually downloaded via *git clone*.  For example:
 ~~~~~~~~~~~~~~~~~~
 git clone git://github.com/GregoryFaust/yaha.git
 cd yaha
-cp yaha /usr/local/bin/.
+make
+cp bin/yaha /usr/local/bin/
 ~~~~~~~~~~~~~~~~~~
 
 ##Usage
