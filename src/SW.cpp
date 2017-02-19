@@ -796,7 +796,7 @@ int findAGSBackwardExtensionCarefully(QueryState_t * QS,  ROFF rOff, char * qStr
 ////////////////////////
 
 template <BOOL banded, BOOL extension, BOOL reverse, BOOL XCutoff>
-int findAffineGapScore(QueryState_t * QS, char * qStr, SUINT qLen, char * rStr, SUINT rLen, EditOpList_t * list, SUINT * addedQLen = NULL, SUINT * addedRLen = NULL)
+int findAffineGapScore(QueryState_t * QS, char * qStr, SUINT qLen, char * rStr, SUINT rLen, EditOpList_t * list, SUINT * addedQLen, SUINT * addedRLen)
 {
     // As we will go row by row, then column by column, we do not need to store all of the V, E, and F arrays.
     // Instead we will store only the previous row and column for each.
