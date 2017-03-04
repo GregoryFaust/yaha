@@ -10,23 +10,27 @@ SDIR := src
 ODIR := obj
 BDIR := bin
 
+CC	     ?= gcc
+CXX      ?= g++
+CFLAGS   ?= -Wall -O3
+CXXFLAGS ?= -Wall -O3
+CPPFLAGS ?=
+LDFLAGS  ?=
+
+CFLAGS	 += -MMD -MP -std=gnu99
+CXXFLAGS += -MMD -MP
+LDFLAGS  += -pthread
+
 # Set up flags depending on mode
 ifdef USERMODE
 PROG	 := yaha
-CCFLAGS  := -Wall -O3 -D COMPILE_USER_MODE -D BUILDNUM=$(BUILDNUM)
+CPPFLAGS += -D COMPILE_USER_MODE -D BUILDNUM=$(BUILDNUM)
 else
 PROG	 := yaha$(BUILDNUM)
-CCFLAGS  := -Wall -Winline -O3 -g -D BUILDNUM=$(BUILDNUM)
+CPPFLAGS += -D BUILDNUM=$(BUILDNUM)
+CFLAGS   += -g
+CXXFLAGS += -g
 endif
-
-# Auto build dependency files.
-CCFLAGS  += -MMD -MP
-
-CC	 := gcc
-CPP      := g++
-CFLAGS	 := $(CCFLAGS) -std=gnu99
-CPPFLAGS := $(CCFLAGS)
-LDFLAGS  := -pthread
 
 # The list of object files.
 OBJfiles := Main.o AlignArgs.o AlignHelpers.o AlignExtFrag.o AlignOutput.o BaseSeq.o Compress.o \
@@ -45,7 +49,7 @@ $(BDIR):
 
 # Link the program
 $(BDIR)/$(PROG): $(OBJS)
-	$(CPP) $(LDFLAGS) -o $@ $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(OBJS)
 
 # Include the dependencies.
 # The actual objects will be built by the below generic rules based on these dependencies.
@@ -53,15 +57,14 @@ $(BDIR)/$(PROG): $(OBJS)
 -include $(OBJS:.o=.d)
 
 # Make the object files.
-# The built in rules will miss the subdirectories. 
+# The built in rules will miss the subdirectories.
 $(ODIR)/%.o: $(SDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 $(ODIR)/%.o: $(SDIR)/%.cpp
-	$(CPP) $(CPPFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean:
 	rm -Rf $(ODIR)
 	rm -Rf $(BDIR)
-
