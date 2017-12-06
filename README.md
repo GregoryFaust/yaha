@@ -1,4 +1,4 @@
-#*yaha*
+# *yaha*
 
 **Written by:** Greg Faust (gf4ea@virginia.edu)  
 [Ira Hall Lab, University of Virginia](http://faculty.virginia.edu/irahall/)
@@ -17,7 +17,7 @@ Click the preceeding link or download the file from this repository.
 
 Current support for Linux only.
 
-##Summary
+## Summary
 *yaha* is an open source, flexible, sensitive and accurate DNA aligner designed for single-end reads.
 It supports three major modes of operation:
 
@@ -31,7 +31,7 @@ The **-OQC** and **-FBS** modes are specifically tuned to form split read mappin
 identify structural variation events (deletions, duplications, insertions or inversions) 
 between the subject query and the reference genome.
 
-##Installation
+## Installation
 *yaha* can be downloaded from the **_releases_** tab or manually downloaded via *git clone*.  For example:
 ~~~~~~~~~~~~~~~~~~
 git clone git://github.com/GregoryFaust/yaha.git
@@ -40,7 +40,7 @@ make
 cp bin/yaha /usr/local/bin/
 ~~~~~~~~~~~~~~~~~~
 
-##Usage
+## Usage
 
 **COMMON USAGE SCENARIOS:** 
 
